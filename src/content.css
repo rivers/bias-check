@@ -1,5 +1,6 @@
 .bias-check-container {
   padding: 12px 12px 0 12px;
+  line-height: 1.4;
 }
 .bias-check-label {
   font-weight: bold;
