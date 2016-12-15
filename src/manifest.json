@@ -6,7 +6,11 @@
 
   "content_scripts": [{
     "css": ["content.css"],
-    "js": ["psl.min.js", "jquery-3.1.1.min.js", "content.js"],
+    "js": [
+      "vendor/jquery-3.1.1.min.js",
+      "vendor/psl.min.js",
+      "content.js"
+    ],
     "matches": ["*://*.facebook.com/*"]
   }],
 
