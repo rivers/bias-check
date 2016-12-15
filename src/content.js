@@ -146,6 +146,7 @@ BC.scan = function() {
 
     $this.find("a").each(function() {
       if (this.hostname !== "l.facebook.com") { return true; }
+      if ($(this).parents(".UFICommentBody").length) { return true; }
       var target = BC.queryParameter("u", this.href);
       domains.push(BC.domainFromUrl(target));
     });
