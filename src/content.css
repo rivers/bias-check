@@ -1,0 +1,11 @@
+.bias-check-container {
+  padding: 12px 12px 0 12px;
+}
+.bias-check-label {
+  font-weight: bold;
+  text-transform: uppercase;
+  padding-right: 0.5em;
+}
+.bias-check-icon {
+  margin: 0 3px -4px 0;
+}

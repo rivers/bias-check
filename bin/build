@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+VERSION=$(grep '"version":' src/manifest.json | awk -F '"' '{ print $4 }')
+
+zip -x *.DS_Store -r packages/bias-check-$VERSION.zip src
