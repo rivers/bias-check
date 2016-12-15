@@ -1,37 +1,37 @@
 var BC = {};
 
 BC.domainMap = {
-  "abcnews.go.com": ["ABC News", 4, 3],
-  "addictinginfo.org": ["Addicting Info", 1, 4.5],
-  "ap.org": ["AP", 4, 3],
-  "bbc.com": ["BBC", 4, 2],
-  "bipartisanreport.com": ["Bipartisan Report", 4.5, 1.5],
-  "breitbart.com": ["Breitbart", 7, 4.5],
-  "cnn.com": ["CNN", 4, 4.5],
-  "dailycaller.com": ["Daily Caller", 7, 4.5],
-  "davidwolfe.com": ["David Wolfe", 1, 4.5],
-  "economist.com": ["Economist", 4.5, 1],
-  "foxnews.com": ["Fox News", 5.5, 3],
-  "huffingtonpost.com": ["Huffington Post", 2, 2.5],
-  "infowars.com": ["InfoWars", 7, 5],
-  "msnbc.com": ["MSNBC", 3, 2],
-  "nbcnews.com": ["NBC News", 4, 3],
-  "npr.org": ["NPR", 4, 2],
-  "nytimes.com": ["NY Times", 4, 2.5],
-  "occupydemocrats.com": ["Occupy Democrats", 2, 4.5],
-  "redstate.com": ["RedState", 6, 4.5],
-  "reuters.com": ["Reuters", 4, 3],
-  "slate.com": ["Slate", 3, 1.5],
-  "theatlantic.com": ["The Atlantic", 3, 1],
-  "theblaze.com": ["The Blaze", 6, 5],
-  "thefiscaltimes.com": ["The Fiscal Times", 5, 1.5],
-  "theguardian.com": ["The Guardian", 3.5, 1.5],
-  "thehill.com": ["The Hill", 5, 2],
-  "usatoday.com": ["USA Today", 4, 4],
-  "usuncut.com": ["U.S. Uncut", 2, 5],
-  "vox.com": ["Vox", 3, 2],
-  "washingtonpost.com": ["Washington Post", 4, 2.5],
-  "wsj.com": ["WSJ", 4.5, 1.5]
+  "abcnews.go.com": ["ABC News", "4", "3"],
+  "addictinginfo.org": ["Addicting Info", "1", "4.5"],
+  "ap.org": ["AP", "4", "3"],
+  "bbc.com": ["BBC", "4", "2"],
+  "bipartisanreport.com": ["Bipartisan Report", "4.5", "1.5"],
+  "breitbart.com": ["Breitbart", "7", "4.5"],
+  "cnn.com": ["CNN", "4", "4.5"],
+  "dailycaller.com": ["Daily Caller", "7", "4.5"],
+  "davidwolfe.com": ["David Wolfe", "1", "4.5"],
+  "economist.com": ["Economist", "4.5", "1"],
+  "foxnews.com": ["Fox News", "5.5", "3"],
+  "huffingtonpost.com": ["Huffington Post", "2", "2.5"],
+  "infowars.com": ["InfoWars", "7", "5"],
+  "msnbc.com": ["MSNBC", "3", "2"],
+  "nbcnews.com": ["NBC News", "4", "3"],
+  "npr.org": ["NPR", "4", "2"],
+  "nytimes.com": ["NY Times", "4", "2.5"],
+  "occupydemocrats.com": ["Occupy Democrats", "2", "4.5"],
+  "redstate.com": ["RedState", "6", "4.5"],
+  "reuters.com": ["Reuters", "4", "3"],
+  "slate.com": ["Slate", "3", "1.5"],
+  "theatlantic.com": ["The Atlantic", "3", "1"],
+  "theblaze.com": ["The Blaze", "6", "5"],
+  "thefiscaltimes.com": ["The Fiscal Times", "5", "1.5"],
+  "theguardian.com": ["The Guardian", "3.5", "1.5"],
+  "thehill.com": ["The Hill", "5", "2"],
+  "usatoday.com": ["USA Today", "4", "4"],
+  "usuncut.com": ["U.S. Uncut", "2", "5"],
+  "vox.com": ["Vox", "3", "2"],
+  "washingtonpost.com": ["Washington Post", "4", "2.5"],
+  "wsj.com": ["WSJ", "4.5", "1.5"]
 };
 
 BC.qualityMap = {
@@ -116,16 +116,20 @@ BC.buildInfoHtml = function(domain, info) {
     , quality = info[2];
 
   var content = "<div class=\"bias-check-container\">";
-  content += "<img class=\"bias-check-icon\" src=\"";
-  content += chrome.extension.getURL('images/icon-16.png');
-  content += "\" />";
+  content += BC.buildIconHtml();
   content += "<span class=\"bias-check-label\">Bias Check</span>";
   content += domain + ': ';
-  content += BC.qualityMap[quality.toString()];
-  content += ", " + BC.biasMap[bias.toString()];
+  content += BC.qualityMap[quality];
+  content += ", " + BC.biasMap[bias];
   content += "</div>";
 
   return content;
+};
+
+BC.buildIconHtml = function() {
+  return "<img class=\"bias-check-icon\" src=\"" +
+    chrome.extension.getURL('images/icon-16.png') +
+    "\" />";
 };
 
 BC.scan = function() {
@@ -167,8 +171,22 @@ BC.scan = function() {
   BC.scanning = false;
 };
 
+BC.scrollLock = false;
+
+BC.scanWithTimeout = function() {
+  BC.scan();
+  BC.scrollLock = false;
+};
+
+BC.onScroll = function() {
+  if (BC.scrollLock) { return; }
+
+  BC.scrollLock = true;
+  setTimeout(BC.scanWithTimeout, 500);
+};
+
 BC.init = function() {
-  document.addEventListener("scroll", BC.scan);
+  document.addEventListener("scroll", BC.onScroll);
   BC.scan();
 };
 
