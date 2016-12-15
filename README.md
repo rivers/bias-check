@@ -5,7 +5,8 @@ A Google Chrome extension that shows media bias in your Facebook news feed
 ### Install
 
 Install from the Chrome Web Store:
-(https://chrome.google.com/webstore/detail/bias-check/pbdeoijclonfoffknbcojepeckfonhho)
+
+https://chrome.google.com/webstore/detail/bias-check/pbdeoijclonfoffknbcojepeckfonhho
 
 ### Details
 
