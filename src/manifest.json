@@ -1,6 +1,6 @@
 {
   "name": "Bias Check",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "manifest_version": 2,
   "description": "Shows media bias in your Facebook news feed",
 
@@ -25,5 +25,5 @@
   "author": "Heather Rivers",
   "homepage_url": "https://github.com/rivers/bias-check",
   "minimum_chrome_version": "40",
-  "permissions": ["*://*.facebook.com/*"]
+  "permissions": ["<all_urls>"]
 }

@@ -8,5 +8,7 @@
   padding-right: 0.5em;
 }
 .bias-check-icon {
+  width: 16px;
+  height: 16px;
   margin: 0 3px -4px 0;
 }
